@@ -15,7 +15,7 @@ public class planetsSimulation extends Application {
     private Parent createContent() throws Exception {
         Sphere earth = new Sphere(2);
         earth.setTranslateZ(7);
-        earth.setTranslateX(11);
+        earth.setTranslateX(30);
         Image earthImage = new Image("file:../img/earth.jpg");
         PhongMaterial earthPhong = new PhongMaterial();
         earthPhong.setDiffuseMap(earthImage);
@@ -30,7 +30,7 @@ public class planetsSimulation extends Application {
         rt4.play();
 
         Sphere moon = new Sphere(1);
-        moon.getTransforms().add(new Rotate(-14, 0, 20, -20, Rotate.Z_AXIS));
+        moon.getTransforms().add(new Rotate(-15, 0, 20, -20, Rotate.Z_AXIS));
         Image moonImage = new Image("file:../img/moon.jpg");
         PhongMaterial moonPhong = new PhongMaterial();
         moonPhong.setDiffuseMap(moonImage);
@@ -39,12 +39,50 @@ public class planetsSimulation extends Application {
         rt5.setNode(moon);
         rt5.setDuration(Duration.millis(3000));
         moon.setTranslateZ(7);
-        moon.setTranslateX(11);
+        moon.setTranslateX(28.5);
         rt5.setAxis(Rotate.Y_AXIS);
         rt5.setByAngle(360);
         rt5.setCycleCount(Animation.INDEFINITE);
         rt5.setInterpolator(Interpolator.LINEAR);
         rt5.play();
+
+
+        Sphere mercury = new Sphere(1.3);
+        mercury.setTranslateZ(7);
+        mercury.setTranslateX(9.5);
+
+        TranslateTransition tt = new TranslateTransition(Duration.millis(20000), mercury);
+        tt.setInterpolator(Interpolator.LINEAR);
+        tt.play();
+
+        Image mercuryImage = new Image("file:../img/mercury.jpg");
+        PhongMaterial mercuryPhong = new PhongMaterial();
+        mercuryPhong.setDiffuseMap(mercuryImage);
+        mercury.setMaterial(mercuryPhong);
+        RotateTransition rtMercury = new RotateTransition();
+        rtMercury.setNode(mercury);
+        rtMercury.setDuration(Duration.millis(3000)); //723
+        rtMercury.setAxis(Rotate.Y_AXIS);
+        rtMercury.setByAngle(360);
+        rtMercury.setCycleCount(Animation.INDEFINITE);
+        rtMercury.setInterpolator(Interpolator.LINEAR);
+        rtMercury.play();
+
+        Sphere venus = new Sphere(2);
+        venus.setTranslateZ(7);
+        venus.setTranslateX(16);
+        Image venusImage = new Image("file:../img/venus.jpg");
+        PhongMaterial venusPhong = new PhongMaterial();
+        venusPhong.setDiffuseMap(venusImage);
+        venus.setMaterial(venusPhong);
+        RotateTransition rtvenus = new RotateTransition();
+        rtvenus.setNode(venus);
+        rtvenus.setDuration(Duration.millis(1849));
+        rtvenus.setAxis(Rotate.Y_AXIS);
+        rtvenus.setByAngle(360);
+        rtvenus.setCycleCount(Animation.INDEFINITE);
+        rtvenus.setInterpolator(Interpolator.LINEAR);
+        rtvenus.play();
 
 
 
@@ -64,9 +102,10 @@ public class planetsSimulation extends Application {
         camera.getTransforms().addAll (
                 pivot,
                 yRotate,
-                new Rotate(-20, Rotate.X_AXIS),
-                new Translate(0, 0, -50)
+                new Rotate(-10, Rotate.X_AXIS),
+                new Translate(0, 0, -120)
         );
+        camera.setFarClip(300);
 
         // animate the camera position.
         Timeline timeline = new Timeline(
@@ -88,6 +127,10 @@ public class planetsSimulation extends Application {
         root.getChildren().add(sun);
         root.getChildren().add(earth);
         root.getChildren().add(moon);
+        root.getChildren().add(mercury);
+        root.getChildren().add(venus);
+
+
 
         // set the pivot for the camera position animation base upon mouse clicks on objects
         root.getChildren().stream()
@@ -114,8 +157,6 @@ public class planetsSimulation extends Application {
 
         return group;
     }
-
-
 
     @Override
     public void start(Stage stage) throws Exception {
