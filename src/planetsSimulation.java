@@ -13,9 +13,12 @@ import javafx.scene.layout.BackgroundImage.*;
 public class planetsSimulation extends Application {
 
     private Parent createContent() throws Exception {
+
+        Coordinates coordinates = new Coordinates();
+
         Sphere earth = new Sphere(2);
         earth.setTranslateZ(7);
-        earth.setTranslateX(30);
+        earth.setTranslateX(26);
         Image earthImage = new Image("file:../img/earth.jpg");
         PhongMaterial earthPhong = new PhongMaterial();
         earthPhong.setDiffuseMap(earthImage);
@@ -37,31 +40,44 @@ public class planetsSimulation extends Application {
         moon.setMaterial(moonPhong);
         RotateTransition rt5 = new RotateTransition();
         rt5.setNode(moon);
-        rt5.setDuration(Duration.millis(3000));
+        rt5.setDuration(Duration.millis(30000));
         moon.setTranslateZ(7);
-        moon.setTranslateX(28.5);
+        moon.setTranslateX(24.5);
         rt5.setAxis(Rotate.Y_AXIS);
         rt5.setByAngle(360);
         rt5.setCycleCount(Animation.INDEFINITE);
         rt5.setInterpolator(Interpolator.LINEAR);
         rt5.play();
 
+        Sphere mars = new Sphere(2);
+        double[] marsxy = coordinates.getMarsCoordinates(30);
+        mars.setTranslateZ(marsxy[0]);
+        mars.setTranslateX(marsxy[1]);
+        Image marsImage = new Image("file:../img/mars.jpg");
+        PhongMaterial marsPhong = new PhongMaterial();
+        marsPhong.setDiffuseMap(marsImage);
+        mars.setMaterial(marsPhong);
+        RotateTransition rtmars = new RotateTransition();
+        rtmars.setNode(mars);
+        rtmars.setDuration(Duration.millis(3120));
+        rtmars.setAxis(Rotate.Y_AXIS);
+        rtmars.setByAngle(360);
+        rtmars.setCycleCount(Animation.INDEFINITE);
+        rtmars.setInterpolator(Interpolator.LINEAR);
+        rtmars.play();
+
 
         Sphere mercury = new Sphere(1.3);
-        mercury.setTranslateZ(7);
-        mercury.setTranslateX(9.5);
-
-        TranslateTransition tt = new TranslateTransition(Duration.millis(20000), mercury);
-        tt.setInterpolator(Interpolator.LINEAR);
-        tt.play();
-
+        double[] mercurysxy = coordinates.getMercuryCoordinates(9.5);
+        mercury.setTranslateZ(mercurysxy[0]);
+        mercury.setTranslateX(mercurysxy[1]);
         Image mercuryImage = new Image("file:../img/mercury.jpg");
         PhongMaterial mercuryPhong = new PhongMaterial();
         mercuryPhong.setDiffuseMap(mercuryImage);
         mercury.setMaterial(mercuryPhong);
         RotateTransition rtMercury = new RotateTransition();
         rtMercury.setNode(mercury);
-        rtMercury.setDuration(Duration.millis(3000)); //723
+        rtMercury.setDuration(Duration.seconds(2908));
         rtMercury.setAxis(Rotate.Y_AXIS);
         rtMercury.setByAngle(360);
         rtMercury.setCycleCount(Animation.INDEFINITE);
@@ -69,15 +85,16 @@ public class planetsSimulation extends Application {
         rtMercury.play();
 
         Sphere venus = new Sphere(2);
-        venus.setTranslateZ(7);
-        venus.setTranslateX(16);
+        double[] venusxy = coordinates.getVenusCoordinates(14.30);
+        venus.setTranslateZ(venusxy[0]);
+        venus.setTranslateX(venusxy[1]);
         Image venusImage = new Image("file:../img/venus.jpg");
         PhongMaterial venusPhong = new PhongMaterial();
         venusPhong.setDiffuseMap(venusImage);
         venus.setMaterial(venusPhong);
         RotateTransition rtvenus = new RotateTransition();
         rtvenus.setNode(venus);
-        rtvenus.setDuration(Duration.millis(1849));
+        rtvenus.setDuration(Duration.seconds(5800));
         rtvenus.setAxis(Rotate.Y_AXIS);
         rtvenus.setByAngle(360);
         rtvenus.setCycleCount(Animation.INDEFINITE);
@@ -86,9 +103,9 @@ public class planetsSimulation extends Application {
 
 
 
+
         Sphere sun = new Sphere(5);
         sun.setMaterial(new PhongMaterial(Color.RED));
-
         Image sunImage = new Image("file:../img/sun.jpg");
         PhongMaterial sunPhong = new PhongMaterial();
         sunPhong.setDiffuseMap(sunImage);
@@ -125,10 +142,11 @@ public class planetsSimulation extends Application {
         Group root = new Group();       
         root.getChildren().add(camera);
         root.getChildren().add(sun);
-        root.getChildren().add(earth);
-        root.getChildren().add(moon);
         root.getChildren().add(mercury);
         root.getChildren().add(venus);
+        root.getChildren().add(earth);
+        root.getChildren().add(moon);
+        root.getChildren().add(mars);
 
 
 
